@@ -1,6 +1,8 @@
+import RegisterForm from '../components/RegisterForm'
+
 function App(){
     return(
-        <p>coucou</p>
+        <RegisterForm/>
     )
 }
 
