@@ -4,7 +4,7 @@ const genre = require('../models/genre'); // Assurez-vous que le chemin est corr
 const router = express.Router();
 
 //---------
-//----------Routes
+//----------Routes Genres
 //---------
 
 router.get('/genres', async (req, res) => {
