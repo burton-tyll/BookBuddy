@@ -4,7 +4,7 @@ const category = require('../models/category'); // Assurez-vous que le chemin es
 const router = express.Router();
 
 //---------
-//----------Routes
+//----------Routes Catégories
 //---------
 
 router.get('/categories', (req, res) => {
