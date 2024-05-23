@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(cors());
 
 // Utiliser les routes du fichier séparé
-app.use('/', categoriesRoutes); 
+app.use('/', categoriesRoutes);
 // Utiliser les routes du fichier séparé
 app.use('/', booksRoutes); 
 
