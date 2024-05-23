@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const booksRoutes = require('./routes/booksRoutes');
+const categoriesRoutes = require('./routes/categoriesRoutes');
 const path = require('path')
 const app = express();
 const cors = require('cors')
@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(cors());
 
 // Utiliser les routes du fichier séparé
-app.use('/', booksRoutes); 
+app.use('/', categoriesRoutes); 
 
 // Connexion à la base de données et lancement du serveur
 const startServer = async () => {
