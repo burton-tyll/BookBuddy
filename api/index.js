@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const booksRoutes = require('./routes/booksRoutes');
 const categoriesRoutes = require('./routes/categoriesRoutes');
+const genresRoutes = require('./routes/genresRoutes');
 const path = require('path')
 const app = express();
 const cors = require('cors')
@@ -11,11 +12,13 @@ const port = 80;
 app.use(express.json());
 
 app.use(cors());
+app.use(cors());
 
-// Utiliser les routes du fichier séparé
+// Utiliser les routes des fichiers séparés
 app.use('/', categoriesRoutes);
-// Utiliser les routes du fichier séparé
 app.use('/', booksRoutes); 
+app.use('/', genresRoutes); 
+
 
 // Connexion à la base de données et lancement du serveur
 const startServer = async () => {
