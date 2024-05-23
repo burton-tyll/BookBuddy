@@ -1,6 +1,8 @@
+import NewBookForm from "./assets/components/NewBookForm"
+
 function App(){
     return(
-        <p>coucou</p>
+        <NewBookForm />
     )
 }
 

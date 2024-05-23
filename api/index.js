@@ -11,6 +11,7 @@ const port = 80;
 app.use(express.json());
 
 app.use(cors());
+app.use(cors());
 
 // Utiliser les routes du fichier séparé
 app.use('/', categoriesRoutes); 
