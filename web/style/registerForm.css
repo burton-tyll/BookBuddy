@@ -1,5 +1,51 @@
-#connexionForm{
-  width: 20%;
+#registerForm{
+  width: 25%;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+  border-radius: 10px;
+  padding: 0.5%;
+  margin: 0.5%;
+}
+
+#registerButton{
+  width: 40% ;
+  border-radius: 5px;
+  margin-top: 2vh;
+  margin-bottom: 1vh;
+}
+
+#registerButton:hover{
+  cursor: pointer;
+}
+
+input{
+  border: none;
+  background-color: none;
+}
+
+#firstNameInputField{
+  margin-bottom: 0.5vh;
+
+}
+
+h5{
+  margin: 0;
+}
+
+.divEmail{
+  margin-bottom: 0;
+}
+
+.inputEmail{
+  margin-bottom: 0;
+}
+
+.row{
+  margin-bottom: 0;
+}
+
+.input-field{
+  margin-bottom: 0;
 }
