@@ -19,6 +19,11 @@
     cursor: pointer;
 }
 
+.addBookButton:hover{
+    background-color: white;
+    transition: background-color 0.5s;
+}
+
 .newbookForm{
     display: flex;
     width: auto;
@@ -65,4 +70,27 @@
 
 .newbookForm form{
     display: flex;
+}
+
+#submitButton{
+    background-color: #0090ff;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    width: 100%;
+}
+
+/*---------------*/
+/*-----------------Media-Queries*/
+/*---------------*/
+
+@media (max-width: 900px){
+    .newbookForm form{
+        flex-direction: column;
+    }
+
+    .newbookformSection{
+        height: max-content;
+    }
 }

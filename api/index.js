@@ -6,19 +6,22 @@ const genresRoutes = require('./routes/genresRoutes');
 const path = require('path')
 const app = express();
 const cors = require('cors')
+
 const port = 80;
 
 // Middleware pour analyser les requêtes JSON
 app.use(express.json());
 
 app.use(cors());
-app.use(cors());
+
 
 // Utiliser les routes des fichiers séparés
 app.use('/', categoriesRoutes);
-app.use('/', booksRoutes); 
-app.use('/', genresRoutes); 
+app.use('/', booksRoutes);
+app.use('/', genresRoutes);
 
+// Définir le dossier "uploads" comme dossier statique
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Connexion à la base de données et lancement du serveur
 const startServer = async () => {

@@ -1,16 +1,15 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const multer = require('multer')
-const book = require('../models/book'); // Assurez-vous que le chemin est correct
+const book = require('../models/book');
 const router = express.Router();
 
 // Configuration de Multer pour le stockage des fichiers
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'uploads/'); // Dossier où les fichiers seront enregistrés
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + '-' + file.originalname); // Renommer le fichier avec un timestamp
+    destination: 'uploads/',
+    filename: (req, file, cb) => {
+      const filename = file.originalname;
+      cb(null, filename);
     }
 });
 
@@ -46,14 +45,8 @@ router.delete('/book/:id', async (req, res) =>{
     res.json('Livre supprimé avec succès, '+myBook+'');
 })
 
-//Get locals pictures and upload on the database
 router.post('/upload', upload.single('img'), (req, res) => {
-    if (req.file) {
-        console.log('Fichier téléchargé:', req.file);
-        res.status(200).send('Image uploaded successfully');
-    } else {
-        res.status(400).send('Failed to upload image');
-    }
+    res.json({ filename: req.file.originalname });
 });
 
 module.exports = router

@@ -3,6 +3,8 @@ import '../style/NewBookForm.css';
 
 function NewBookForm() {
 
+    const address = 'localhost'
+    const port = 80
     //--------
     //---------STATES
     //--------
@@ -16,8 +18,11 @@ function NewBookForm() {
             "author": "",
             "pages": "",
             "category": "",
+            "genre": "",
             "description": ""
     })
+    const [genres, setGenres] = useState([])
+    const [categories, setCategories] = useState([])
 
     //--------
     //---------FONCTIONS
@@ -36,46 +41,82 @@ function NewBookForm() {
     };
 
     const handleSubmit = async (event) => {
-        event.preventDefault();
-        if (!file) return;
-
-        const formDataToSubmit = new FormData();
-        formDataToSubmit.append('img', file);
-        formDataToSubmit.append('title', formData.title);
-        formDataToSubmit.append('author', formData.author);
-        formDataToSubmit.append('pages', formData.pages);
-        formDataToSubmit.append('category', formData.category);
-        formDataToSubmit.append('description', formData.description);
-
+        event.preventDefault(); // Empêche le rechargement de la page lors de la soumission du formulaire
+    
+        if (!file) return; // Si aucun fichier n'est sélectionné, arrête la fonction
+    
+        const formDataToSubmit = new FormData(); // Crée un nouvel objet FormData pour contenir les données à envoyer
+        formDataToSubmit.append('img', file); // Ajoute le fichier d'image au FormData
+    
         try {
-            console.log(formData)
-            const response = await fetch('http://localhost:80/upload', {
+            // Envoie le fichier d'image au serveur pour le téléchargement
+            const response = await fetch(`http://${address}:${port}/upload`, {
                 method: 'POST',
                 body: formDataToSubmit,
             });
+    
             if (response.ok) {
-                alert('Image uploaded successfully');
+                // Si l'image a été téléchargée avec succès, analyse la réponse JSON du serveur
+                const data = await response.json();
+    
+                // Met à jour le champ 'img' dans formData avec le nom de fichier renvoyé par le serveur
+                handleUpdate('img', data.filename);
+    
+                // Continue avec la soumission des autres données du formulaire
+                const bookResponse = await fetch(`http://${address}:${port}/addBook`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        ...formData, // Copie toutes les données actuelles du formulaire
+                        img: data.filename // Met à jour le champ img avec le nom du fichier reçu du serveur
+                    })
+                });
+    
+                if (bookResponse.ok) {
+                    alert('Le livre a été ajouté avec succès!'); // Alerte l'utilisateur que le livre a été ajouté avec succès
+                } else {
+                    alert('Quelque chose ne va pas avec l\'envoi du livre'); // Alerte l'utilisateur en cas d'échec de l'ajout du livre
+                }
             } else {
-                alert('Failed to upload image');
+                alert('Impossible d\'envoyer l\'image au serveur'); // Alerte l'utilisateur en cas d'échec du téléchargement de l'image
             }
         } catch (error) {
-            console.error('Error uploading image:', error);
+            console.error('Error uploading image:', error); // Log l'erreur en cas de problème lors du téléchargement de l'image
         }
     };
+    
+    
 
     const handleUpdate = (property, value) => {
         setFormData(prevFormData => ({
             ...prevFormData,
             [property]: value
         }));
-    };
+    }; 
+
+    const getGenres = async () =>{
+        const response = await fetch(`http://${address}:${port}/genres`)
+        const allGenres = await response.json()
+        setGenres(allGenres)
+    }
+
+    const getCategories = async () =>{
+        const response = await fetch(`http://${address}:${port}/categories`)
+        const allCategories = await response.json()
+        setCategories(allCategories)
+    }
 
     // Déclaration de selectRef avec useRef
     const selectRef = useRef(null);
 
     useEffect(() => {
+        getGenres()
+        getCategories()
         // Initialise le select Materialize CSS après le montage du composant
         const selectElement = document.querySelectorAll('select');
+        // eslint-disable-next-line no-undef
         M.FormSelect.init(selectElement);
     }, [form]);
 
@@ -134,30 +175,32 @@ function NewBookForm() {
                                 ref={selectRef}
                                 onChange={(e) => handleUpdate('category', e.target.value)}
                                 value={formData.category} // Utilisez value pour définir la valeur sélectionnée
+                                id='categoriesSelect'
                             >
-                                <option value="" disabled>Choose your option</option>
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
-                                <option value="3">Option 3</option>
+                                <option value="" disabled>Catégorie</option>
+                                {categories.map((category, index) => (
+                                        <option key={index} value={category.name}>{category.name}</option>
+                                ))}
                             </select>
-                                <label>Materialize Select</label>
                             </div>
                         </div>
                         <div className="row">
                             <div className="input-field col s12">
                             <select
                                 ref={selectRef}
-                                onChange={(e) => handleUpdate('category', e.target.value)}
-                                value={formData.category} // Utilisez value pour définir la valeur sélectionnée
+                                onChange={(e) => handleUpdate('genre', e.target.value)}
+                                value={formData.genre} // Utilisez value pour définir la valeur sélectionnée
+                                id='genresSelect'
                             >
-                                <option value="" disabled>Choose your option</option>
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
-                                <option value="3">Option 3</option>
+                                <option value="" disabled>Genre</option>
+                                {genres.map((genre, index) => (
+                                        <option key={index} value={genre.name}>{genre.name}</option>
+                                ))}
                             </select>
-                                <label>Materialize Select</label>
                             </div>
                         </div>
+                    </div>
+                    <div>
                         <div className="file-field input-field">
                             <div className="btn">
                                 <span>Image</span>
@@ -178,7 +221,7 @@ function NewBookForm() {
                                 />
                             </div>
                         </div>
-                        <button type='submit'>Envoyer</button>
+                        <button id='submitButton' type='submit'>Envoyer</button>
                     </div>
                 </form>
             </div>
