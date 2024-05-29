@@ -1,0 +1,51 @@
+/*Section*/
+.collection{
+    display: flex;
+    height: max-content;
+}
+
+/*Menu latéral*/
+.menu{
+    width: 20%;
+    background-color: #EECFA1;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.menu a{
+    text-decoration: none;
+    color: white;
+    font-size: 25px;
+}
+
+.links{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 90%;
+}
+
+.menu h2{
+    font-size: 50px;
+    font-weight: bolder;
+    height: 10%;
+}
+
+
+/*Contenu de la page*/
+.collectionContent{
+    width: 80%;
+    display: grid;
+    grid-template-columns: repeat(4, 200px);
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.livreTest{
+    width: 200px;
+    height: 300px;
+    background-color: #D9D9D9;
+}
