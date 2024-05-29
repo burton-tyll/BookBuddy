@@ -1,6 +1,8 @@
 // RegisterForm.jsx
 import React, { useState } from 'react';
-import '../src/assets/style/registerForm.css';
+import '../style/registerForm.css';
+
+const port = 80
 
 const RegisterForm = () => {
   const [formData, setFormData] = useState({
@@ -23,7 +25,7 @@ const RegisterForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:3000/addUser', {
+      const response = await fetch(`http://localhost:${port}/addUser`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

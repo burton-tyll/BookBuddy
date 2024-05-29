@@ -4,7 +4,9 @@ import { useEffect } from 'react';
 import Header from './assets/views/Header';
 import HomePage from './assets/views/HomePage';
 import Collection from './assets/views/Collection';
-import ConnexionForm from '../components/ConnexionForm';
+import ConnexionForm from './assets/components/ConnexionForm';
+import RegisterForm from './assets/components/RegisterForm';
+import DisconnectionButton from './assets/components/DisconnectionButton'
 
 function App() {
     useEffect(() => {

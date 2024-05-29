@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import '../src/assets/style/connexionForm.css';
+import '../style/connexionForm.css';
 import DisconnectionButton from './DisconnectionButton';
 
 const port = 80
