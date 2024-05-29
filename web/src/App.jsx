@@ -6,7 +6,7 @@ import DisconnectionButton from '../components/DisconnectionButton'
 function App(){
     return(
         <div>
-        <RegisterForm/>
+        <ConnexionForm/>
         </div>
     )
 }
