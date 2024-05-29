@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import Header from './assets/views/Header';
 import HomePage from './assets/views/HomePage';
 import Collection from './assets/views/Collection';
+import ConnexionForm from '../components/ConnexionForm';
 
 function App() {
     useEffect(() => {
@@ -18,6 +19,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path='/collection' element={<Collection />} />
+                <Route path='/connexion' element={<ConnexionForm />} />
             </Routes>
         </Router>
     );
