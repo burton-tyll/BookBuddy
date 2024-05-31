@@ -2,6 +2,16 @@ import '../style/Collection.css';
 import { Link } from 'react-router-dom';
 
 function Collection(){
+
+    const address = 'localhost'
+    const port = 80
+
+    const getFavorites = async () => {
+        const token = sessionStorage.getItem('token');
+        const favorites = await fetch(`http://${address}:${port}/`)
+    }
+
+
     return(
         <section className="collection">
             <div className="menu">

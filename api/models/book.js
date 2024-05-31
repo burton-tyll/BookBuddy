@@ -17,7 +17,3 @@ function bookModel(){
 const book = bookModel()
 
 module.exports = book
-
-
-
-

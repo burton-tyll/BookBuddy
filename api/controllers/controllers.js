@@ -15,7 +15,7 @@ exports.addUser = async function(req, res) {
       await nouveluser.save();
       
       // Générer un token JWT pour cet utilisateur
-      const token = jwt.sign({ userId: nouveluser._id }, 'random_secret_key', { expiresIn: '1h' });
+      const token = jwt.sign({ userId: nouveluser._id }, '1234', { expiresIn: '1h' });
 
       // Construire l'objet de réponse avec les données de l'utilisateur et le token
       const responseData = {
@@ -99,7 +99,7 @@ exports.connectUser = async function(req, res) {
     user.connected = true;
     await user.save();
 
-    const token = jwt.sign({ userId: user._id }, 'random_secret_key', { expiresIn: '1h' });
+    const token = jwt.sign({ userId: user._id }, '1234', { expiresIn: '1h' });
 
     res.send({ message: 'Utilisateur connecté avec succès', token, userId: user._id }); // Inclure l'ID utilisateur dans la réponse
 
@@ -122,5 +122,8 @@ exports.disconnectUser = async function(req, res) {
     res.status(500).send({ message: 'Erreur lors de la déconnexion utilisateur', error: err });
   }
 };
+
+
+
 
 

@@ -39,6 +39,8 @@ const RegisterForm = () => {
         setIsConnected(true);
         setUserId(data.user.id);
         setToken(data.token);
+        sessionStorage.setItem('token', data.token)
+        sessionStorage.setItem('userId', data.userId)
       }
       // Réinitialisez le formulaire après l'inscription réussie si nécessaire
       setFormData({

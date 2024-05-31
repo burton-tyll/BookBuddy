@@ -2,7 +2,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const multer = require('multer')
 const book = require('../models/book');
+const user = require('../models/users');
 const router = express.Router();
+const authMiddleware = require('../middlewares/authMiddleware')
+
 
 // Configuration de Multer pour le stockage des fichiers
 const storage = multer.diskStorage({

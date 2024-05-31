@@ -40,6 +40,8 @@ const ConnexionForm = () => {
       setIsConnected(true);
       setUserId(data.userId); // Assurez-vous que la réponse contient l'ID utilisateur
       setToken(data.token); // Assurez-vous que la réponse contient le token
+      sessionStorage.setItem('token', data.token)
+      sessionStorage.setItem('userId', data.userId)
       // Réinitialise le formulaire après la connexion réussie si nécessaire
       setFormData({
         email: '',
