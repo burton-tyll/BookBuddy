@@ -122,5 +122,3 @@ exports.disconnectUser = async function(req, res) {
     res.status(500).send({ message: 'Erreur lors de la déconnexion utilisateur', error: err });
   }
 };
-
-
