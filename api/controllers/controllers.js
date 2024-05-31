@@ -1,6 +1,7 @@
 const User = require("../models/users");
+const Book = require("../models/book");
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 
 exports.postReward = function(req, res) {
   res.send({ type: 'POST' });
@@ -13,17 +14,14 @@ exports.addUser = async function(req, res) {
     if (!user) {
       const nouveluser = new User(req.body);
       await nouveluser.save();
-      
-      // Générer un token JWT pour cet utilisateur
-      const token = jwt.sign({ userId: nouveluser._id }, '1234', { expiresIn: '1h' });
 
-      // Construire l'objet de réponse avec les données de l'utilisateur et le token
+      const token = jwt.sign({ userId: nouveluser._id }, 'random_secret_key', { expiresIn: '1h' });
+
       const responseData = {
         user: nouveluser,
         token: token
       };
 
-      // Envoyer la réponse avec le statut 201
       res.status(201).send(responseData);
     } else {
       return res.status(409).send({ message: 'Email déjà utilisé.' });
@@ -39,7 +37,6 @@ exports.getUsers = async function(req, res) {
     if (!users || users.length === 0) {
       return res.status(404).send();
     }
-    console.log(users);
     return res.send(users);
   } catch (erreur) {
     res.status(500).send(erreur);
@@ -63,18 +60,16 @@ exports.updateUser = async function(req, res) {
     if (req.body.password) {
       req.body.password = await bcrypt.hash(req.body.password, 10);
     }
-    
+
     const user = await User.findById(req.params.id);
     if (!user) {
       return res.status(404).send();
     }
 
-    // Mettre à jour les propriétés de l'utilisateur
     Object.keys(req.body).forEach(key => {
       user[key] = req.body[key];
     });
 
-    // Sauvegarder l'utilisateur mis à jour pour déclencher les hooks Mongoose
     await user.save();
 
     res.send(user);
@@ -101,13 +96,12 @@ exports.connectUser = async function(req, res) {
 
     const token = jwt.sign({ userId: user._id }, '1234', { expiresIn: '1h' });
 
-    res.send({ message: 'Utilisateur connecté avec succès', token, userId: user._id }); // Inclure l'ID utilisateur dans la réponse
+    res.send({ message: 'Utilisateur connecté avec succès', token, userId: user._id });
 
   } catch (error) {
     res.status(500).send({ message: 'Erreur lors de la connexion utilisateur', error });
   }
 };
-
 
 exports.disconnectUser = async function(req, res) {
   try {
@@ -115,8 +109,8 @@ exports.disconnectUser = async function(req, res) {
     if (!user) {
       return res.status(404).send({ message: 'Utilisateur non trouvé' });
     }
-    user.connected = false; // Modifier la valeur de connected à false
-    await user.save(); // Sauvegarder les modifications
+    user.connected = false;
+    await user.save();
     res.send({ message: 'Utilisateur déconnecté avec succès' });
   } catch (err) {
     res.status(500).send({ message: 'Erreur lors de la déconnexion utilisateur', error: err });
@@ -126,4 +120,34 @@ exports.disconnectUser = async function(req, res) {
 
 
 
+exports.addFavorite = async function(req, res) {
+  try {
+    const userId = req.userId; // ID utilisateur extrait du token
+    const bookId = req.params.bookId;
 
+    // Vérifier si le livre existe
+    const book = await Book.findById(bookId);
+    if (!book) {
+      return res.status(404).send({ message: 'Livre non trouvé' });
+    }
+
+    // Ajouter le livre aux favoris de l'utilisateur
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).send({ message: 'Utilisateur non trouvé' });
+    }
+
+    // Vérifier si le livre est déjà dans les favoris
+    if (user.favorites.some(favorite => favorite.bookId === bookId)) {
+      return res.status(400).send({ message: 'Livre déjà dans les favoris' });
+    }
+
+    // Ajouter le livre aux favoris
+    user.favorites.push({ bookId });
+    await user.save();
+
+    res.send({ message: 'Livre ajouté aux favoris', favorites: user.favorites });
+  } catch (error) {
+    res.status(500).send({ message: 'Erreur lors de l\'ajout du livre aux favoris', error });
+  }
+};
