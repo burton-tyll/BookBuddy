@@ -16,6 +16,7 @@ router.post('/reward/:parametre', auth, userController.postReward);
 router.get('/users/:id', auth, userController.getUserById);
 router.put('/users/:id', auth, userController.updateUser);
 router.put('/disconnection/:id', auth, userController.disconnectUser);
-router.post('/addFavorite/:bookId', auth, userController.addFavorite); // Nouvelle route
+router.post('/addFavorite/:bookId', auth, userController.addFavorite);
+router.post('/deleteFavorite/:bookId', auth, userController.deleteFavorite);
 
 module.exports = router;

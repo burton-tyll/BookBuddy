@@ -151,3 +151,31 @@ exports.addFavorite = async function(req, res) {
     res.status(500).send({ message: 'Erreur lors de l\'ajout du livre aux favoris', error });
   }
 };
+
+exports.deleteFavorite = async function(req, res) {
+    try {
+      const userId = req.userId; // ID utilisateur extrait du token
+      const bookId = req.params.bookId;
+  
+      // Vérifier si l'utilisateur existe
+      const user = await User.findById(userId);
+      if (!user) {
+        return res.status(404).send({ message: 'Utilisateur non trouvé' });
+      }
+  
+      // Vérifier si le livre est dans les favoris de l'utilisateur
+      const favoriteIndex = user.favorites.findIndex(favorite => favorite.bookId === bookId);
+      if (favoriteIndex === -1) {
+        return res.status(400).send({ message: 'Livre non trouvé dans les favoris' });
+      }
+  
+      // Supprimer le livre des favoris
+      user.favorites.splice(favoriteIndex, 1);
+      await user.save();
+  
+      res.send({ message: 'Livre supprimé des favoris', favorites: user.favorites });
+    } catch (error) {
+      res.status(500).send({ message: 'Erreur lors de la suppression du livre des favoris', error });
+    }
+  };
+  

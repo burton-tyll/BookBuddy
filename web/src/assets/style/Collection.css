@@ -1,7 +1,8 @@
 /*Section*/
 .collection{
     display: flex;
-    height: max-content;
+    min-height: calc(100vh - 150px);
+    margin: 0;
 }
 
 /*Menu latéral*/
