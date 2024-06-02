@@ -22,6 +22,7 @@ function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path='/collection' element={<Collection />} />
                 <Route path='/connexion' element={<ConnexionForm />} />
+                <Route path='/register' element={<RegisterForm />} />
             </Routes>
         </Router>
     );
