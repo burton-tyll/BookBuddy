@@ -2,6 +2,7 @@ import '../style/Collection.css';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import FavoriteButton from '../components/FavoriteButton';
+import Status from '../components/Status';
 
 function Collection() {
     const address = 'localhost';
@@ -41,17 +42,12 @@ function Collection() {
         M.Modal.init(elems);
     }, [favs]);
 
-    const test = () => {
-        console.log(favs);
-    };
-
     return (
         <section className="collection">
             <div className="menu">
                 <h2>Mes favoris</h2>
                 <div className='links'>
                     <li><Link to="/collection">Mes collections</Link></li>
-                    <button onClick={test}>Voir tout</button>
                 </div>
             </div>
             <div className="collectionContent">
@@ -59,30 +55,41 @@ function Collection() {
                     <div key={index}>
                     <img className='bookImg modal-trigger' href={`#modal${index}`} src={`http://${address}/uploads/${book.img}`} alt={book.title} />
                     <div id={`modal${index}`} className="modal">
-                        <div className="modal-content">
-                            <div className='sideInfos'>
-                                <img src={`http://${address}/uploads/${book.img}`} alt={book.title} />
-                                <div className='inlineInfo'>
-                                    <h5>Auteur: </h5><h6>{book.author}</h6>
+                        <div className="modalFavContent">
+                            <div className='headermodal'>
+                                <FavoriteButton 
+                                    bookId={book._id}
+                                />
+                                <Status 
+                                    bookId={book._id}
+                                />
+                            </div>
+                            <div className='bodymodal'>
+                                <div className='bodyimg'>
+                                    <img src={`http://${address}:${port}/uploads/${book.img}`} alt={book.title} />
                                 </div>
-                                <div className='inlineInfo'>
-                                    <h5>Genre: </h5><h6>{book.genre}</h6>
-                                </div>
-                                <div className='inlineInfo'>
-                                    <h5>Catégorie: </h5><h6>{book.category}</h6>
-                                </div>
-                                <div className='inlineInfo'>
-                                    <h5>Nombre de pages: </h5><h6>{book.pages}</h6>
+                                <div className='bodysynopsis'>
+                                    <h1>Synopsis</h1>
+                                    <p>{book.description}</p>
                                 </div>
                             </div>
-                            <div className='frontInfos'>
-                                <div className='titleHead'>
-                                    <h1>{book.title}</h1>
-                                    <FavoriteButton 
-                                        bookId={book._id}
-                                    />
+                            <div className='footermodal'>
+                                <div className='author'>
+                                    <img src='/img/auteur.png' alt='auteur' />
+                                    <h4>{book.author}</h4>
                                 </div>
-                                <p>{book.description}</p>
+                                <div className='category'>
+                                    <img src='/img/categorie.png' alt='catégorie' />
+                                    <h4>{book.category}</h4>
+                                </div>
+                                <div className='genre'>
+                                    <img src='/img/genre.png' alt='genre' />
+                                    <h4>{book.genre}</h4>
+                                </div>
+                                <div className='pages'>
+                                    <img src='/img/pages.png' alt='pages' />
+                                    <div className='inputpages'><input id='pagesInput' type="text" placeholder='ma page' /><h4>/{book.pages}</h4></div>
+                                </div>
                             </div>
                         </div>
                         <div className="modal-footer">

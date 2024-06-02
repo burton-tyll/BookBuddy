@@ -35,7 +35,7 @@ function FavoriteButton({ bookId }) {
 
     /*Fonction d'ajout de favoris */
     const addFavorite = (bookId) => {
-        console.log(bookId)
+        console.log('Le livre a été ajouté aux favoris avec succès!')
         fetch(`http://${address}:${port}/addFavorite/${bookId}`, {
             method: 'POST',
             headers: {

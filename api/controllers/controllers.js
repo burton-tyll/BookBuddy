@@ -124,6 +124,11 @@ exports.addFavorite = async function(req, res) {
   try {
     const userId = req.userId; // ID utilisateur extrait du token
     const bookId = req.params.bookId;
+    const body = {
+        bookId: bookId,
+        currentPage: 0,
+        state: 'toread'
+    }
 
     // Vérifier si le livre existe
     const book = await Book.findById(bookId);
@@ -143,7 +148,7 @@ exports.addFavorite = async function(req, res) {
     }
 
     // Ajouter le livre aux favoris
-    user.favorites.push({ bookId });
+    user.favorites.push( body );
     await user.save();
 
     res.send({ message: 'Livre ajouté aux favoris', favorites: user.favorites });
@@ -178,4 +183,38 @@ exports.deleteFavorite = async function(req, res) {
       res.status(500).send({ message: 'Erreur lors de la suppression du livre des favoris', error });
     }
   };
+
+  exports.changeFavoriteStatus = async function(req, res) {
+    try {
+        const userId = req.userId;
+        const bookId = req.params.bookId;
+        const { state } = req.body; // Extrayez la valeur de l'état du corps de la requête
+
+        // Recherchez l'utilisateur correspondant à l'ID de l'utilisateur
+        const user = await User.findById(userId);
+
+        // Recherchez le favori correspondant au livre spécifié
+        const favoriteIndex = user.favorites.findIndex(favorite => favorite.bookId === bookId);
+
+        if (favoriteIndex !== -1) {
+            // Mettez à jour l'état du favori
+            user.favorites[favoriteIndex].state = state;
+
+            // Indiquez à Mongoose que le champ favorites a été modifié
+            user.markModified('favorites');
+
+            // Enregistrez les modifications dans la base de données
+            await user.save();
+
+            // Renvoyez le nouveau statut du favori
+            return res.json({ state });
+        } else {
+            return res.status(404).json({ error: 'Favori introuvable pour ce livre' });
+        }
+    } catch (error) {
+        console.error('Erreur lors du changement de statut du favori:', error);
+        res.status(500).json({ error: 'Erreur lors du changement de statut du favori' });
+    }
+};
+
   

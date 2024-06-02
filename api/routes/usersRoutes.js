@@ -18,5 +18,6 @@ router.put('/users/:id', auth, userController.updateUser);
 router.put('/disconnection/:id', auth, userController.disconnectUser);
 router.post('/addFavorite/:bookId', auth, userController.addFavorite);
 router.post('/deleteFavorite/:bookId', auth, userController.deleteFavorite);
+router.put('/changeFavoriteStatus/:bookId', auth, userController.changeFavoriteStatus);
 
 module.exports = router;

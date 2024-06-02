@@ -38,7 +38,7 @@ router.get('/book/:id', async (req, res) =>{
 //Add a book
 router.post('/addBook', async (req, res) => {
     const newBook = await book.create(req.body);
-    res.json(book)
+    res.json(book);
 });
 
 //Delete a book with ID
@@ -50,9 +50,14 @@ router.delete('/book/:id', async (req, res) =>{
 
 //Get Favorites
 router.get('/favorite/:id', async (req, res) => {
-    const userId = req.params.id;
-    const userMatch = await users.find({'_id': userId});
-    res.json(userMatch[0].favorites)
+    try{
+        const userId = req.params.id;
+        const userMatch = await users.find({'_id': userId});
+        res.json(userMatch[0].favorites)
+    } catch (error){
+        console.error('Erreur lors de la récupération des favoris')
+    }
+    
 });
 
 router.post('/upload', upload.single('img'), (req, res) => {
