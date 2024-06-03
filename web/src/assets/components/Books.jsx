@@ -28,16 +28,12 @@ function Book() {
         M.Modal.init(elems);
     }, [books]);
 
-    const viewBook = () => {
-        // Function body can be implemented if needed
-    };
-
     return (
         <section className="bookSection">
             <h1>Livres populaires</h1>
             <div className='booksGrid'>
                 {books.map((book, index) => (
-                    <div key={index} onClick={viewBook}>
+                    <div key={index}>
                         <img className='bookImg modal-trigger' href={`#modal${index}`} src={`http://${address}/uploads/${book.img}`} alt={book.title} />
                         <div id={`modal${index}`} className="modal">
                             <div className="modal-content">
@@ -59,7 +55,9 @@ function Book() {
                                 <div className='frontInfos'>
                                     <div className='titleHead'>
                                         <h1>{book.title}</h1>
-                                        <FavoriteButton />
+                                        <FavoriteButton 
+                                            bookId={book._id}
+                                        />
                                     </div>
                                     <p>{book.description}</p>
                                 </div>

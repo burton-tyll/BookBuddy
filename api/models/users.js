@@ -6,21 +6,11 @@ const subSchemaOptions = {
 };
 
 const favoriteSchema = new mongoose.Schema({
-  bookId: String
-}, subSchemaOptions);
-
-const wishlistSchema = new mongoose.Schema({
-  bookId: String
-}, subSchemaOptions);
-
-const readingSchema = new mongoose.Schema({
   bookId: String,
-  currentPage: String
+  currentPage: Number,
+  state: String
 }, subSchemaOptions);
 
-const finishedSchema = new mongoose.Schema({
-  bookId: String
-}, subSchemaOptions);
 
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true},
@@ -28,9 +18,6 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true }, // Mot de passe est obligatoire
   connected: { type: Boolean, default: true },
   favorites: [favoriteSchema],
-  wishlist: [wishlistSchema],
-  reading: [readingSchema],
-  finished: [finishedSchema]
 }, { versionKey: false });
 
 
