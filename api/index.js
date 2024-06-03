@@ -12,10 +12,12 @@ const cors = require('cors')
 const port = 80;
 const adress = 'localhost'
 
+app.use(cors());
+
+
 // Middleware pour analyser les requêtes JSON
 app.use(express.json());
 
-app.use(cors());
 
 
 // Utiliser les routes des fichiers séparés
