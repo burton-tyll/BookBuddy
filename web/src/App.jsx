@@ -20,8 +20,9 @@ function App() {
             <Header />
             <Routes>
                 <Route path="/" element={<ConnexionForm />} />
-                <Route path="/Accueil" element={<HomePage />} /> 
+                <Route path="/Accueil" element={<HomePage />} />
                 <Route path="/inscription" element={<RegisterForm />} />
+                <Route path='/collection' element={<Collection />} />
             </Routes>
         </Router>
     );
