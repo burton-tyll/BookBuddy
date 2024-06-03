@@ -1,3 +1,9 @@
+#divRegisterForm{
+    display: flex;
+    justify-content: center;
+    margin-top: 13svh;
+}
+
 #registerForm{
   width: 25%;
   display: flex;
