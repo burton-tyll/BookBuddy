@@ -1,5 +1,6 @@
 // RegisterForm.jsx
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../style/registerForm.css';
 
 const port = 80
@@ -13,6 +14,7 @@ const RegisterForm = () => {
   const [isConnected, setIsConnected] = useState(false);
   const [userId, setUserId] = useState(null);
   const [token, setToken] = useState(null);
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -48,6 +50,7 @@ const RegisterForm = () => {
         password: '',
         email: ''
       });
+      navigate('/Accueil', {replace:true});
     } catch (error) {
       console.error(error);
     }
@@ -60,7 +63,7 @@ const RegisterForm = () => {
   };
 
   return (
-    <div>
+    <div id='divRegisterForm'>
       {isConnected ? (
         <div>
           <h5>Bienvenue !</h5>

@@ -19,10 +19,9 @@ function App() {
         <Router>
             <Header />
             <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path='/collection' element={<Collection />} />
-                <Route path='/connexion' element={<ConnexionForm />} />
-                <Route path='/register' element={<RegisterForm />} />
+                <Route path="/" element={<ConnexionForm />} />
+                <Route path="/Accueil" element={<HomePage />} />
+                <Route path="/inscription" element={<RegisterForm />} />
             </Routes>
         </Router>
     );

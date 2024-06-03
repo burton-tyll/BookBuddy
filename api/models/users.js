@@ -13,12 +13,13 @@ const favoriteSchema = new mongoose.Schema({
 
 
 const userSchema = new mongoose.Schema({
-  username: String,
-  email: String,
-  password: String,
-  connected: {type: Boolean, default: true},
+  username: { type: String, required: true},
+  email: { type: String, required: true }, // Email est obligatoire
+  password: { type: String, required: true }, // Mot de passe est obligatoire
+  connected: { type: Boolean, default: true },
   favorites: [favoriteSchema],
 }, { versionKey: false });
+
 
 // Avant de sauvegarder l'utilisateur, hachez son mot de passe
 userSchema.pre('save', async function(next) {

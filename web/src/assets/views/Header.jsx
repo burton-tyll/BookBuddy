@@ -12,7 +12,7 @@ function Header() {
             </ul>
             <nav>
                 <div className="nav-wrapper">
-                    <a href="/" className="brand-logo"><img className='logo' src="/img/logo.png"/></a>
+                    <a href="/Accueil" className="brand-logo"><img className='logo' src="/img/logo.png"/></a>
                     <ul className="right hide-on-med-and-down">
                         <li><Link to="/collection">Mes listes</Link></li>
                         {/* Dropdown Trigger */}
