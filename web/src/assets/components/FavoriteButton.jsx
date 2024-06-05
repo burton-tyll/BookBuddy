@@ -18,18 +18,18 @@ function FavoriteButton({ bookId }) {
             headers: {
                 'Authorization': `Bearer ${sessionStorage.getItem('token')}`
             }
-        }); 
+        });
         const favorites = await response.json();
         /*-------Comparaison avec le livre ouvert*/
         favorites.map(favorite => {
-            if (favorite.bookId == bookId){
+            if (favorite.bookId == bookId) {
                 setFavorite(true)
             }
         })
     }
 
     /*Analyse des favoris existants au chargement de la page */
-    useEffect(()=>{
+    useEffect(() => {
         checkFavorite()
     }, [])
 
@@ -42,7 +42,7 @@ function FavoriteButton({ bookId }) {
                 'Authorization': `Bearer ${sessionStorage.getItem('token')}`, // Authentification si nécessaire
                 'Content-Type': 'application/json' // Type de contenu JSON
             }
-        }) 
+        })
     }
 
     const deleteFavorite = (bookId) => {
@@ -57,18 +57,18 @@ function FavoriteButton({ bookId }) {
 
     const handleClick = async () => {
         setFavorite(!favorite);
-        if (!favorite){
+        if (!favorite) {
             addFavorite(bookId)
-        }else{
+        } else {
             deleteFavorite(bookId)
         }
     };
 
     return (
-        <img 
-            className={favorite ? 'animate__animated animate__heartBeat favoriteButton' : 'favoriteButton'} 
-            onClick={handleClick} 
-            src={favorite ? '/img/full_heart.png' : '/img/empty_heart.png'} 
+        <img
+            className={favorite ? 'animate__animated animate__heartBeat favoriteButton' : 'favoriteButton'}
+            onClick={handleClick}
+            src={favorite ? '/img/full_heart.png' : '/img/empty_heart.png'}
             alt="Favorite Button"
         />
     );
